@@ -1,8 +1,8 @@
-require "contact"
-#require "database"
+require "./contact"
+require "./database"
 
 class CRM
-  
+
   def initialize(name)
     @name = name
   end
@@ -34,21 +34,20 @@ class CRM
 
   def add_new_contact
     print "Enter First Name: "
-    first_name = gets.chomp.capitalize
+    @first_name = gets.chomp.capitalize
     print "Enter Last Name: "
-    puts "First Name: #{first_name}"
-    last_name = gets.chomp.capitalize
-    puts "Last Name: #{last_name}"
+    @last_name = gets.chomp.capitalize
     print "Enter Email Address: "
-    email = gets.chomp
+    @email = gets.chomp
     print "Enter phone number: "
-    phone_number = gets.chomp
+    @phone_number = gets.chomp
     print "Enter company: "
-    company = gets.chomp
+    @company = gets.chomp
     print "Enter a Note: "
-    note = gets.chomp
-    contact = Contact.new(first_name, last_name, email, phone_number, company, note)
-    p contact
+    @note = gets.chomp
+    new_contact = []
+    new_contact = Contact.new(@first_name, @last_name, @email, @phone_number, @company, @note)
+    new_contact.add_to_database
   end
 end
 
