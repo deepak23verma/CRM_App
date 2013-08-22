@@ -1,4 +1,12 @@
+require "contact"
+#require "database"
+
 class CRM
+  
+  def initialize(name)
+    @name = name
+  end
+
   def main_menu
     print_main_menu
     @user_selected = gets.to_i
@@ -23,7 +31,26 @@ class CRM
     display_an_attribute if user_selected == 5
     exit if user_selected == 6
   end
+
+  def add_new_contact
+    print "Enter First Name: "
+    first_name = gets.chomp.capitalize
+    print "Enter Last Name: "
+    puts "First Name: #{first_name}"
+    last_name = gets.chomp.capitalize
+    puts "Last Name: #{last_name}"
+    print "Enter Email Address: "
+    email = gets.chomp
+    print "Enter phone number: "
+    phone_number = gets.chomp
+    print "Enter company: "
+    company = gets.chomp
+    print "Enter a Note: "
+    note = gets.chomp
+    contact = Contact.new(first_name, last_name, email, phone_number, company, note)
+    p contact
+  end
 end
 
-CRM = CRM.new
+CRM = CRM.new("Buyers are Liars! Happy Selling!!")
 CRM.main_menu
