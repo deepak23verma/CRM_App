@@ -1,8 +1,8 @@
 class CRM
   def main_menu
     print_main_menu
-    user_selected = gets.to_i
-    call_option(user_selected)
+    @user_selected = gets.to_i
+    call_option(@user_selected)
   end
 
   def print_main_menu
@@ -12,10 +12,8 @@ class CRM
     puts "[4] Display all the contacts"
     puts "[5] Display an attribute" 
     puts "[6] Exit"
-    puts "Enter a number: "
+    print "Enter a number: "
   end
-
-
 
   def call_option(user_selected)
     add_new_contact if user_selected == 1
@@ -24,7 +22,8 @@ class CRM
     display_a_contact if user_selected == 4
     display_an_attribute if user_selected == 5
     exit if user_selected == 6
-    # Finish off and do the rest for 3 through 6
-    # To be clear, the methods add_new_contact and modify_existing_contact
-    # haven't been defined yet
   end
+end
+
+CRM = CRM.new
+CRM.main_menu
