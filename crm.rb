@@ -11,9 +11,13 @@ class CRM
     print_main_menu
     @user_selected = gets.to_i
     call_option(@user_selected)
+    while @user_selected != 6
+        main_menu
+    end
   end
 
   def print_main_menu
+    puts "\e[H\e[2J"
     puts "[1] Add a new contact"
     puts "[2] Modify an existing contact"
     puts "[3] Delete a contact"
@@ -27,12 +31,13 @@ class CRM
     add_new_contact if user_selected == 1
     modify_existing_contact if user_selected == 2
     delete_a_contact if user_selected == 3
-    display_a_contact if user_selected == 4
+    display_all_contacts if user_selected == 4
     display_an_attribute if user_selected == 5
     exit if user_selected == 6
   end
 
   def add_new_contact
+    puts "\e[H\e[2J"
     print "Enter First Name: "
     @first_name = gets.chomp.capitalize
     print "Enter Last Name: "
@@ -48,6 +53,23 @@ class CRM
     new_contact = []
     new_contact = Contact.new(@first_name, @last_name, @email, @phone_number, @company, @note)
     new_contact.add_to_database
+  end
+
+  def modify_existing_contact
+    puts "\e[H\e[2J"
+  end
+
+  def delete_a_contact
+    puts "\e[H\e[2J"
+  end
+
+  def display_all_contacts
+    puts "\e[H\e[2J"
+    puts Database.contacts[:last_name]
+  end
+
+  def display_an_attribute
+    puts "\e[H\e[2J"
   end
 end
 
