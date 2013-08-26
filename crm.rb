@@ -1,6 +1,3 @@
-require "./contact"
-require "./database"
-
 class CRM
 
   def initialize(name)
@@ -17,7 +14,7 @@ class CRM
   end
 
   def print_main_menu
-    puts "\e[H\e[2J"
+    #puts "\e[H\e[2J"
     puts "[1] Add a new contact"
     puts "[2] Modify an existing contact"
     puts "[3] Delete a contact"
@@ -28,49 +25,78 @@ class CRM
   end
 
   def call_option(user_selected)
-    add_new_contact if user_selected == 1
-    modify_existing_contact if user_selected == 2
-    delete_a_contact if user_selected == 3
-    display_all_contacts if user_selected == 4
-    display_an_attribute if user_selected == 5
+    Contact.add_new_contact if user_selected == 1
+    Contact.modify_existing_contact if user_selected == 2
+    Contact.delete_a_contact if user_selected == 3
+    Contact.display_all_contacts if user_selected == 4
+    Contact.display_an_attribute if user_selected == 5
     exit if user_selected == 6
   end
+end
 
-  def add_new_contact
-    puts "\e[H\e[2J"
-    print "Enter First Name: "
-    @first_name = gets.chomp.capitalize
-    print "Enter Last Name: "
-    @last_name = gets.chomp.capitalize
-    print "Enter Email Address: "
-    @email = gets.chomp
-    print "Enter phone number: "
-    @phone_number = gets.chomp
-    print "Enter company: "
-    @company = gets.chomp
-    print "Enter a Note: "
-    @note = gets.chomp
-    new_contact = []
-    new_contact = Contact.new(@first_name, @last_name, @email, @phone_number, @company, @note)
-    new_contact.add_to_database
+class Contact
+    
+    attr_accessor :first_name, :last_name, :email, :phone_number, :company, :note, :id
+
+    def initialize(first_name, last_name, email, phone_number, company, note)
+            
+            @first_name = first_name,
+            @last_name = last_name,
+            @email = email,
+            @phone_number = phone_number,
+            @company = company,
+            @note = note
+    end
+
+    def self.add_new_contact
+        puts "\e[H\e[2J"
+        print "Enter First Name: "
+        first_name = gets.chomp.capitalize
+        print "Enter Last Name: "
+        last_name = gets.chomp.capitalize
+        print "Enter Email Address: "
+        email = gets.chomp
+        print "Enter phone number: "
+        phone_number = gets.chomp
+        print "Enter company: "
+        company = gets.chomp
+        print "Enter a Note: "
+        note = gets.chomp
+
+        new_contact = Contact.new(first_name, last_name, email, phone_number, company, note)
+        Database.add_contact(new_contact)
+    end
+
+    def modify_existing_contact
+        puts "\e[H\e[2J"
+    end
+
+    def delete_a_contact
+        puts "\e[H\e[2J"
+    end
+
+    def self.display_all_contacts
+        Database.contacts[0..6].each {|x| puts x}
+    end
+
+    def display_an_attribute
+        puts "\e[H\e[2J"
+    end
+end
+
+class Database
+  @contacts = []
+  @id = 1000
+
+  def self.add_contact(contact)
+    contact.id = @id
+    @contacts << contact
+    @id += 1
   end
 
-  def modify_existing_contact
-    puts "\e[H\e[2J"
-  end
-
-  def delete_a_contact
-    puts "\e[H\e[2J"
-  end
-
-  def display_all_contacts
-    puts "\e[H\e[2J"
-    puts Database.contacts[:last_name]
-  end
-
-  def display_an_attribute
-    puts "\e[H\e[2J"
-  end
+  # def self.contacts
+  #   @contacts
+  # end
 end
 
 CRM = CRM.new("Buyers are Liars! Happy Selling!!")
